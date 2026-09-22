@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebSiteToAPK — конвертер сайтов в APK</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+
+    <!-- Старт -->
+    <section data-screen="welcome" class="screen screen-welcome">
+      <div class="welcome-card">
+        <div class="brand">WebSiteToAPK</div>
+        <p class="tagline">WebSiteToAPK — бесплатный и локальный конвертер веб-сайтов в .apk</p>
+        <button type="button" id="btn-start" class="btn btn-primary btn-lg">Начать</button>
+      </div>
+    </section>
+
+    <!-- Мастер -->
+    <section data-screen="wizard" class="screen" hidden>
+      <header class="topbar">
+        <div class="brand-sm">WebSiteToAPK</div>
+        <div class="progress-block">
+          <div class="progress-meta">
+            <span id="global-progress-label">Этап 1 из 3</span>
+          </div>
+          <div class="progress-track-wrap">
+            <div class="progress-track">
+              <div id="global-progress-bar" class="progress-fill" style="width:33%"></div>
+            </div>
+            <div class="progress-steps" role="list">
+              <span class="progress-step is-active" data-step-dot="1" role="listitem">1</span>
+              <span class="progress-step" data-step-dot="2" role="listitem">2</span>
+              <span class="progress-step" data-step-dot="3" role="listitem">3</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Этап 1 -->
+      <div data-step="1" class="step-panel">
+        <h1>Параметры приложения</h1>
+        <p class="lead">Укажите, как приложение будет отображаться на устройстве.</p>
+        <div class="form-grid">
+          <label class="field">
+            <span>Название</span>
+            <input id="opt-name" type="text" maxlength="50" value="My App" autocomplete="off">
+          </label>
+          <label class="field">
+            <span>Версия</span>
+            <input id="opt-version" type="text" value="1.0.0" autocomplete="off">
+          </label>
+          <label class="field">
+            <span>Версия билда</span>
+            <input id="opt-build" type="number" min="1" step="1" value="1">
+          </label>
+          <label class="field">
+            <span>Package Name</span>
+            <input id="opt-package" type="text" value="com.example.app" autocomplete="off">
+          </label>
+          <fieldset class="field field-orient">
+            <legend>Ориентация экрана (БЕТА)</legend>
+            <div class="orient-group" role="radiogroup" aria-label="Ориентация экрана">
+              <label class="orient-option">
+                <input type="radio" name="opt-orientation" value="portrait" checked>
+                <span>Портретный</span>
+              </label>
+              <label class="orient-option">
+                <input type="radio" name="opt-orientation" value="landscape">
+                <span>Альбомный</span>
+              </label>
+              <label class="orient-option">
+                <input type="radio" name="opt-orientation" value="auto">
+                <span>Авто</span>
+              </label>
+            </div>
+          </fieldset>
+        </div>
+        <div class="step-actions">
+          <button type="button" id="btn-step1-next" class="btn btn-primary">Далее</button>
+        </div>
+      </div>
+
+      <!-- Этап 2 -->
+      <div data-step="2" class="step-panel" hidden>
+        <h1>Иконка приложения</h1>
+        <p class="lead">Загрузите квадратную иконку. Форматы: PNG, JPG, JPEG, WEBP. Сторона — степень двойки, не больше 1024×1024.</p>
+        <div class="icon-box">
+          <button type="button" id="btn-pick-icon" class="btn btn-secondary">Выбрать файл</button>
+          <span id="icon-file-label" class="muted">Файл не выбран</span>
+          <div id="icon-preview-wrap" class="icon-preview-wrap" hidden>
+            <img id="icon-preview" alt="Иконка">
+            <span id="icon-size-label" class="muted"></span>
+          </div>
+        </div>
+        <p class="hint">Допустимые размеры: 32, 64, 128, 256, 512, 1024.</p>
+        <div class="step-actions">
+          <button type="button" id="btn-step2-back" class="btn btn-ghost">Назад</button>
+          <button type="button" id="btn-step2-next" class="btn btn-primary" disabled>Далее</button>
+        </div>
+      </div>
+
+      <!-- Этап 3 -->
+      <div data-step="3" class="step-panel" hidden>
+        <h1>Проверка</h1>
+        <p class="lead">Проверьте параметры перед сборкой. Затем загрузите файлы сайта и запустите сборку.</p>
+
+        <div class="summary-card">
+          <div class="summary-row">
+            <div class="summary-icon">
+              <img id="summary-icon" alt="" hidden>
+              <div id="summary-icon-placeholder" class="icon-placeholder">APP</div>
+            </div>
+            <dl class="summary-list">
+              <div><dt>Название</dt><dd id="sum-name">—</dd></div>
+              <div><dt>Версия</dt><dd id="sum-version">—</dd></div>
+              <div><dt>Версия билда</dt><dd id="sum-build">—</dd></div>
+              <div><dt>Package Name</dt><dd id="sum-package">—</dd></div>
+              <div><dt>Ориентация</dt><dd id="sum-orientation">—</dd></div>
+            </dl>
+          </div>
+        </div>
+
+        <div class="site-upload">
+          <h2>Исходный код</h2>
+          <p class="hint">Папка, ZIP или ссылка — приложение откроет сайт внутри себя. (в корне проекта обязательно должен быть файл index.html)</p>
+          <div class="row-btns">
+            <button type="button" id="btn-site-folder" class="btn btn-secondary">Папка</button>
+            <button type="button" id="btn-site-zip" class="btn btn-secondary">ZIP</button>
+            <button type="button" id="btn-site-url" class="btn btn-secondary">URL</button>
+          </div>
+          <div id="url-panel" class="url-panel" hidden>
+            <label class="field">
+              <span>Адрес сайта</span>
+              <input id="opt-url" type="url" placeholder="https://example.com" autocomplete="off">
+            </label>
+            <button type="button" id="btn-url-apply" class="btn btn-primary">Применить</button>
+          </div>
+          <span id="site-status" class="muted">Источник не выбран</span>
+        </div>
+
+        <div class="step-actions">
+          <button type="button" id="btn-step3-back" class="btn btn-ghost">Назад</button>
+          <button type="button" id="btn-build" class="btn btn-primary btn-lg" disabled>Начать сборку</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Консоль сборки -->
+    <section data-screen="build" class="screen" hidden>
+      <header class="topbar">
+        <div class="brand-sm">WebSiteToAPK</div>
+        <div class="progress-block">
+          <div class="progress-meta"><span id="build-progress-text">Ожидание</span></div>
+          <div class="progress-track">
+            <div id="build-progress-bar" class="progress-fill" style="width:0%"></div>
+          </div>
+        </div>
+      </header>
+
+      <div class="build-panel">
+        <h1>Сборка</h1>
+        <p class="lead">Подождите, идёт сборка. Обычно это занимает меньше минуты.</p>
+        <div id="build-console" class="console" aria-live="polite"></div>
+        <div class="step-actions">
+          <button type="button" id="btn-download" class="btn btn-primary btn-lg" hidden disabled>Скачать APK</button>
+          <button type="button" id="btn-again" class="btn btn-ghost" hidden>Новая сборка</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+  <script type="module" src="app.js?v=31"></script>
+</body>
+  </html>
