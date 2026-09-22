@@ -1,0 +1,411 @@
+:root {
+  --bg: #f4f6fa;
+  --surface: #ffffff;
+  --text: #1a1d26;
+  --muted: #5c6578;
+  --border: #e2e6ef;
+  --primary: #3b6cff;
+  --primary-hover: #2f5ae6;
+  --primary-text: #ffffff;
+  --secondary: #eef1f8;
+  --secondary-hover: #e2e7f3;
+  --danger: #c62828;
+  --ok: #1b7f4a;
+  --warn: #9a6b00;
+  --radius: 14px;
+  --shadow: 0 8px 28px rgba(26, 29, 38, 0.08);
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  min-height: 100%;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.screen {
+  flex: 1;
+  width: min(720px, 100%);
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+
+/* hidden must win over display:flex on screens */
+.screen[hidden],
+[data-screen][hidden],
+[data-step][hidden],
+[hidden] {
+  display: none !important;
+}
+
+
+.screen-welcome {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 40px 32px;
+  text-align: center;
+  max-width: 520px;
+  width: 100%;
+}
+
+.brand {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.brand-sm {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+.tagline {
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0 0 28px;
+  font-size: 1.05rem;
+}
+
+.topbar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.progress-block { width: 100%; }
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.progress-track {
+  height: 8px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 99px;
+  transition: width 0.25s ease;
+}
+
+h1 {
+  font-size: 1.45rem;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+}
+h2 {
+  font-size: 1.05rem;
+  margin: 0 0 8px;
+}
+.lead {
+  color: var(--muted);
+  margin: 0 0 24px;
+  line-height: 1.5;
+}
+.hint, .muted {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.hint { margin: 12px 0 0; }
+
+.form-grid {
+  display: grid;
+  gap: 16px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.field input {
+  font: inherit;
+  font-weight: 400;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+}
+.field input:focus {
+  outline: 2px solid color-mix(in srgb, var(--primary) 35%, transparent);
+  border-color: var(--primary);
+}
+
+.btn {
+  font: inherit;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  padding: 11px 18px;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--primary);
+  color: var(--primary-text);
+}
+.btn-primary:hover:not(:disabled) { background: var(--primary-hover); }
+.btn-secondary {
+  background: var(--secondary);
+  color: var(--text);
+}
+.btn-secondary:hover:not(:disabled) { background: var(--secondary-hover); }
+.btn-ghost {
+  background: transparent;
+  color: var(--muted);
+}
+.btn-ghost:hover:not(:disabled) { color: var(--text); background: var(--secondary); }
+.btn-lg { padding: 14px 28px; font-size: 1.05rem; }
+
+.step-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+.icon-box {
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+.icon-preview-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.icon-preview-wrap img,
+#summary-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  background: #fff;
+}
+.icon-placeholder {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  background: var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.summary-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+.summary-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.summary-list {
+  margin: 0;
+  flex: 1;
+  display: grid;
+  gap: 10px;
+}
+.summary-list > div {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+.summary-list dt {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 500;
+}
+.summary-list dd {
+  margin: 0;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.site-upload {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.row-btns {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0;
+  flex-wrap: wrap;
+}
+
+.console {
+  background: #1a1d26;
+  color: #d7dbe7;
+  border-radius: var(--radius);
+  padding: 16px;
+  min-height: 280px;
+  max-height: 48vh;
+  overflow: auto;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  margin: 16px 0 8px;
+}
+.console-line { margin: 0 0 4px; white-space: pre-wrap; word-break: break-word; }
+.console-info { color: #c5cbe0; }
+.console-success { color: #6dcea0; }
+.console-warn { color: #e6c35c; }
+.console-error { color: #ff8a80; }
+
+.build-panel .step-actions { justify-content: flex-start; }
+
+@media (max-width: 560px) {
+  .summary-list > div { grid-template-columns: 1fr; gap: 2px; }
+  .welcome-card { padding: 28px 20px; }
+}
+
+
+.progress-track-wrap {
+  position: relative;
+  height: 28px;
+  display: flex;
+  align-items: center;
+}
+.progress-track-wrap .progress-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 8px;
+  margin: 0;
+}
+.progress-steps {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+.progress-step {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 3px var(--bg);
+  flex-shrink: 0;
+}
+.progress-step.is-done {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+.progress-step.is-active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+.field-orient {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+.field-orient legend {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  padding: 0;
+}
+.orient-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.orient-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+.orient-option:has(input:checked) {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, var(--surface));
+  color: var(--text);
+  font-weight: 600;
+}
+.orient-option input {
+  accent-color: var(--primary);
+  margin: 0;
+}
+
+.url-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 12px 0;
+  width: 100%;
+}
+.url-panel .field { width: 100%; }
+.url-panel .btn { align-self: flex-start; }
