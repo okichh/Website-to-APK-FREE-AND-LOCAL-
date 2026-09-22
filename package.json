@@ -1,0 +1,9 @@
+{
+  "name": "websitetoapk",
+  "version": "1.0.0",
+  "private": true,
+  "description": "WebSiteToAPK — local website to Android APK converter",
+  "scripts": {
+    "start": "npx --yes serve public -p 3000"
+  }
+}
